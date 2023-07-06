@@ -12,25 +12,27 @@ import java.math.BigDecimal;
 public class AccountService {
     private  String baseUrl;
     private  RestTemplate restTemplate = new RestTemplate();
-    private AuthenticatedUser user;
+    private AuthenticatedUser currentUser;
 
-    public AccountService(String url, AuthenticatedUser user){
+    public AccountService(String url, AuthenticatedUser currentUser){
         baseUrl = url;
-        this.user = user;
+        this.currentUser = currentUser;
     }
 
         public BigDecimal newBalance(){
             BigDecimal balance = new BigDecimal(0);
             try {
-                balance = restTemplate.exchange(baseUrl + "balance" + user.getUser().getId(), HttpMethod.GET, makeAuthEntity(), BigDecimal.class ).getBody();
+                balance = restTemplate.exchange(baseUrl + "balance/" + currentUser.getUser().getId(), HttpMethod.GET, makeAuthEntity(), BigDecimal.class ).getBody();
+                System.out.println("Your current account balance is: $" + balance);
             }catch(RestClientResponseException e){
                 System.out.println("Error getting balance");
             }
             return balance;
         }
-    private HttpEntity<Void> makeAuthEntity() {
-        org.springframework.http.HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(user.getToken());
-        return new HttpEntity<>(headers);
+    private HttpEntity makeAuthEntity() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(currentUser.getToken());
+        HttpEntity a = new HttpEntity<>(headers);
+        return a;
     }
 }
