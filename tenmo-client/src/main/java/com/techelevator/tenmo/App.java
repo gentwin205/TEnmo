@@ -8,6 +8,7 @@ import com.techelevator.tenmo.services.AuthenticationService;
 import com.techelevator.tenmo.services.ConsoleService;
 import com.techelevator.tenmo.services.TransferService;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class App {
@@ -112,7 +113,18 @@ public class App {
 	private void sendBucks() {
         TransferService transferService = new TransferService(API_BASE_URL, currentUser);
         User[] users = transferService.getUsers();
-        //TODO: Print out list, prompt for response, use input data
+        
+        consoleService.displayUsers(users);
+
+        int id = consoleService.promptForInt("Enter ID of user you are sending to (0 to cancel): ");
+
+        if (id == 0) {
+            return;
+        }
+
+        BigDecimal balance = consoleService.promptForBigDecimal("Enter amount: ");
+
+
 
 	}
 

@@ -90,15 +90,14 @@ public class ConsoleService {
     }
 
     public void displayUsers(User[] users){
-        System.out.println("-------------------------------------------")
+        System.out.println("-------------------------------------------");
         System.out.println("Users");
-        System.out.printf("ID          Name");
-
-
+        System.out.printf("%s    %s\n", "ID", "Username");
         for (User a : users){
             String name = a.getUsername();
-            int Id = a.getId();
-
+            int id = a.getId();
+            System.out.printf("%s    %s\n", id, name);
         }
+        System.out.println("-------------------------------------------");
     }
 }

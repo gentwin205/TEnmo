@@ -31,7 +31,7 @@ public class TransferService {
     public User[] getUsers(){
         User[] user = null;
         try{
-            user = restTemplate.exchange(baseUrl + "users" + currentUser.getUser().getId(), HttpMethod.GET, makeAuthEntity(), User[].class ).getBody();
+            user = restTemplate.exchange(baseUrl + "users", HttpMethod.GET, makeAuthEntity(), User[].class ).getBody();
 
         }catch(RestClientResponseException e ){
             System.out.println("Error getting users");
