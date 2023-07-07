@@ -9,6 +9,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 public class TransferService {
     public String baseUrl;
     private RestTemplate restTemplate = new RestTemplate();
@@ -33,6 +35,10 @@ public class TransferService {
             System.out.println("Error getting users");
         }
         return user;
+    }
+
+    public void transferBucks() {
+
     }
 
     private HttpEntity makeAuthEntity() {

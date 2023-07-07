@@ -15,6 +15,7 @@ public class JdbcTransfer implements TransferDao {
     public List<Transfer> getAllTransfers(int userId) {
         List<Transfer> list = new ArrayList<>();
         String sql = null;
+        return null;
     }
 
     @Override
