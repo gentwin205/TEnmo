@@ -9,6 +9,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class TransferService {
@@ -30,7 +31,8 @@ public class TransferService {
     public User[] getUsers(){
         User[] user = null;
         try{
-            user = restTemplate.exchange(baseUrl + "users",HttpMethod.GET, makeAuthEntity(), User[].class).getBody();
+            user = restTemplate.exchange(baseUrl + "users" + currentUser.getUser().getId(), HttpMethod.GET, makeAuthEntity(), User[].class ).getBody();
+
         }catch(RestClientResponseException e ){
             System.out.println("Error getting users");
         }

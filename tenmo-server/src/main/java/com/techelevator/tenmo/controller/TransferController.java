@@ -18,7 +18,7 @@ public class TransferController {
         this.userDao = userDao;
     }
 
-    @RequestMapping(path = "/users", method = RequestMethod.GET)
+    @RequestMapping(path = "users", method = RequestMethod.GET)
     public List<User> getUsers() {
         return userDao.getUsers();
     }
