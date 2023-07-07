@@ -1,6 +1,7 @@
 package com.techelevator.tenmo.services;
 
 import com.techelevator.tenmo.model.AuthenticatedUser;
+import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.model.User;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -12,6 +13,17 @@ public class TransferService {
     public String baseUrl;
     private RestTemplate restTemplate = new RestTemplate();
     private AuthenticatedUser currentUser;
+
+    public TransferService( String url, AuthenticatedUser currentUser){
+         this.currentUser = currentUser;
+         baseUrl = url;
+    }
+
+    public Transfer[] listTransfer(){
+        Transfer[] transfer = null;
+       return null;
+
+    }
 
     public User[] getUsers(){
         User[] user = null;
