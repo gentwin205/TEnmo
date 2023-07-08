@@ -125,10 +125,7 @@ public class App {
             return;
         }
 
-        Transfer transfer = new Transfer();
-        transfer.setAmount(amountGiven);
-
-        transferService.transferBucks(transfer, senderId, recipientId);
+        transferService.transferBucks(senderId, recipientId, amountGiven.doubleValue());
 
 	}
 

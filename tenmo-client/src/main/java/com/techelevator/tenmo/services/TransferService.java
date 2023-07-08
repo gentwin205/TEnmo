@@ -2,6 +2,7 @@ package com.techelevator.tenmo.services;
 
 import com.techelevator.tenmo.model.AuthenticatedUser;
 import com.techelevator.tenmo.model.Transfer;
+import com.techelevator.tenmo.model.TransferPackage;
 import com.techelevator.tenmo.model.User;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -40,21 +41,35 @@ public class TransferService {
         return user;
     }
 
-    public void transferBucks(Transfer transfer, int senderId, int RecipientId) {
-        try {
+    public TransferPackage transferBucks(int senderId, int recipientId, double amountGiven) {
+        TransferPackage tp = new TransferPackage(senderId, recipientId, amountGiven);
+        HttpEntity<TransferPackage> entity = makeAuthEntity(tp);
+        TransferPackage returnedPackage = null;
 
+        try {
+            returnedPackage = restTemplate.postForObject(baseUrl + "transfer", entity, TransferPackage.class);
 
         } catch (RestClientResponseException e) {
-
+            System.out.println("Bad Response.");
         } catch (ResourceAccessException e) {
-
+            System.out.println("No Response.");
         }
+
+        return returnedPackage;
     }
 
-    private HttpEntity makeAuthEntity() {
+    private HttpEntity<Void> makeAuthEntity() {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(currentUser.getToken());
         HttpEntity a = new HttpEntity<>(headers);
+        return a;
+    }
+
+    //Not pretty but might work?
+    private HttpEntity<TransferPackage> makeAuthEntity(TransferPackage tp) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(currentUser.getToken());
+        HttpEntity<TransferPackage> a = new HttpEntity(tp, headers);
         return a;
     }
 }
