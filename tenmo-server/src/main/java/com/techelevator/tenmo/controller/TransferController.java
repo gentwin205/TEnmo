@@ -23,4 +23,9 @@ public class TransferController {
         return userDao.getUsers();
     }
 
+    @RequestMapping(path = "transfer", method = RequestMethod.PUT)
+    public void transferBucks() {
+
+    }
+
 }

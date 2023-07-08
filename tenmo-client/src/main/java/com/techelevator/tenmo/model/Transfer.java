@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 
 public class Transfer {
 
-    private int accountFrom;
-    private int accountTo;
-    private int transferId;
-    private int transferTypeId;
+    private int accountFrom; //Get from server side
+    private int accountTo; //Get from server side
+    private int transferId; //Get in sql statement "RETURNING"
+    private int transferTypeId; //Hard coded for now
     private int transferStatusId;
     private String transferTypeDesc;
     private String transferStatusDesc;

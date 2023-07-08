@@ -6,6 +6,7 @@ import com.techelevator.tenmo.model.User;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
@@ -39,8 +40,15 @@ public class TransferService {
         return user;
     }
 
-    public void transferBucks() {
+    public void transferBucks(Transfer transfer, int senderId, int RecipientId) {
+        try {
 
+
+        } catch (RestClientResponseException e) {
+
+        } catch (ResourceAccessException e) {
+
+        }
     }
 
     private HttpEntity makeAuthEntity() {

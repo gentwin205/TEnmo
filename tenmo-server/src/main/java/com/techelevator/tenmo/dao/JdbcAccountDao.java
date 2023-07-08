@@ -33,4 +33,54 @@ public class JdbcAccountDao implements AccountDao{
 
         return balance;
     }
+
+    @Override
+    public BigDecimal subtractBalanceById(int id, BigDecimal amount) { //input user id
+        String sql = "UPDATE account SET balance = ? WHERE user_id = ?;";
+        BigDecimal currentBalance = getBalanceById(id);
+        BigDecimal newBalance = currentBalance.subtract(amount);
+
+        //Check if amount given is less than current balance
+        if (newBalance.doubleValue() > 0) {
+            try {
+                jdbcTemplate.update(sql, newBalance.doubleValue(), id);
+            } catch (CannotGetJdbcConnectionException e) {
+                System.out.println("Can't Connect.");
+            }
+            return newBalance;
+        }
+        return null;
+    }
+
+    @Override
+    public BigDecimal addBalanceById(int id, BigDecimal amount) { //input user id
+        String sql = "UPDATE account SET balance = ? WHERE user_id = ?;";
+        BigDecimal currentBalance = getBalanceById(id);
+        BigDecimal newBalance = currentBalance.add(amount);
+
+        try {
+            jdbcTemplate.update(sql, newBalance.doubleValue(), id);
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Can't Connect.");
+        }
+
+        return newBalance;
+    }
+
+    @Override
+    public int getAccountByUserId(int id) {
+        String sql = "SELECT account_id FROM account WHERE user_id = ?;";
+        int accountId = 0;
+
+        try {
+            SqlRowSet result = jdbcTemplate.queryForRowSet(sql, id);
+            if (result.next()) {
+                accountId = result.getInt("account_id");
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            System.out.println("Can't connect.");
+        }
+
+        return accountId;
+    }
 }
