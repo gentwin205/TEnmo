@@ -15,6 +15,10 @@ public class TransferPackage {
         this.amount = amount;
     }
 
+    public TransferPackage() {
+        //nothing
+    }
+
     public int getSenderId() {
         return senderId;
     }

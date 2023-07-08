@@ -36,9 +36,9 @@ public class TransferController {
     public Transfer transferBucks(@RequestBody TransferPackage tp) {
         int fromId = accountDao.getAccountByUserId(tp.getSenderId());
         int toId = accountDao.getAccountByUserId(tp.getRecipientId());
-        BigDecimal amount = tp.getAmount();
+        double amount = tp.getAmount();
 
-        return transferDao.createTransfer(amount, fromId, toId);
+        return transferDao.createTransfer(amount, fromId, toId, 2, 2);
     }
 
 }

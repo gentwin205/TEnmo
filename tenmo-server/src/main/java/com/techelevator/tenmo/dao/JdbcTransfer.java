@@ -12,6 +12,10 @@ import java.util.List;
 public class JdbcTransfer implements TransferDao {
     private JdbcTemplate jdbcTemplate;
 
+    public JdbcTransfer(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
 
     @Override
     public List<Transfer> getAllTransfers(int userId) {
@@ -21,11 +25,11 @@ public class JdbcTransfer implements TransferDao {
     }
 
     @Override
-    public Transfer createTransfer(BigDecimal amount, int accountFrom, int accountTo) {
+    public Transfer createTransfer(double amount, int accountFrom, int accountTo, int transferType, int transferStatus) {
         Transfer transfer = new Transfer(amount, accountFrom, accountTo);
         String sql = "INSERT INTO transfer (transfer_type_id, transfer_status_id, account_from, account_to, amount)" +
                 "VALUES (?,?,?,?,?)";
-        jdbcTemplate.update(sql, amount, accountFrom, accountTo);
+        jdbcTemplate.update(sql, transferType, transferStatus, accountFrom, accountTo, amount);
         return transfer;
 
 

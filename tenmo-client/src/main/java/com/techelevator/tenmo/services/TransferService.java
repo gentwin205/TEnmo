@@ -50,7 +50,7 @@ public class TransferService {
             returnedPackage = restTemplate.postForObject(baseUrl + "transfer", entity, TransferPackage.class);
 
         } catch (RestClientResponseException e) {
-            System.out.println("Bad Response.");
+            System.out.println(e.getMessage());
         } catch (ResourceAccessException e) {
             System.out.println("No Response.");
         }
@@ -69,7 +69,7 @@ public class TransferService {
     private HttpEntity<TransferPackage> makeAuthEntity(TransferPackage tp) {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(currentUser.getToken());
-        HttpEntity<TransferPackage> a = new HttpEntity(tp, headers);
+        HttpEntity<TransferPackage> a = new HttpEntity<>(tp, headers);
         return a;
     }
 }
