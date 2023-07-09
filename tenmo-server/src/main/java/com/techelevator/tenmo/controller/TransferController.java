@@ -26,6 +26,12 @@ public class TransferController {
         this.accountDao = accountDao;
     }
 
+    @RequestMapping(path = "transfer/{id}", method = RequestMethod.GET)
+    public List<Transfer> getAllTransfers(@PathVariable int id){
+        List<Transfer> transfer = transferDao.getAllTransfers(id);
+        return transfer;
+    }
+
     @RequestMapping(path = "users", method = RequestMethod.GET)
     public List<User> getUsers() {
         return userDao.getUsers();

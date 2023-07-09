@@ -14,6 +14,10 @@ public class Transfer {
     private String userTo;
     private BigDecimal amount;
 
+    public Transfer(){
+        //empty
+    }
+
     public Transfer(BigDecimal amount, int accountFrom, int accountTo){
         this.amount = amount;
         this.accountFrom = accountFrom;

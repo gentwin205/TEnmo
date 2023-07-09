@@ -112,16 +112,26 @@ public class App {
 	}
 
 	private void sendBucks() {
+
         TransferService transferService = new TransferService(API_BASE_URL, currentUser);
         User[] users = transferService.getUsers();
 
         consoleService.displayUsers(users);
-
         int senderId = currentUser.getUser().getId();
+
         int recipientId = consoleService.promptForInt("Enter ID of user you are sending to (0 to cancel): ");
+
+        if (recipientId == 0){
+            return;
+        } else if(senderId == recipientId) {
+            System.out.println("You can't send money to yourself.");
+            return;
+        }
+
         BigDecimal amountGiven = consoleService.promptForBigDecimal("Enter amount: ");
 
-        if (recipientId == 0 || amountGiven.doubleValue() <= 0 || senderId == recipientId) {
+        if(amountGiven.doubleValue() <= 0) {
+            System.out.println("Enter a positive amount.");
             return;
         }
 
