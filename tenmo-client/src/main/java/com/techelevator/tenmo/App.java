@@ -125,7 +125,7 @@ public class App {
             return;
         }
 
-        transferService.transferBucks(senderId, recipientId, amountGiven.doubleValue());
+        transferService.transferBucks(senderId, recipientId, amountGiven);
 
 	}
 

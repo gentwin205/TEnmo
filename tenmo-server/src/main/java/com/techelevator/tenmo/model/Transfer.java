@@ -12,9 +12,9 @@ public class Transfer {
     private String transferStatusDesc;
     private String userFrom;
     private String userTo;
-    private double amount;
+    private BigDecimal amount;
 
-    public Transfer(double amount, int accountFrom, int accountTo){
+    public Transfer(BigDecimal amount, int accountFrom, int accountTo){
         this.amount = amount;
         this.accountFrom = accountFrom;
         this.accountTo = accountTo;
@@ -92,11 +92,11 @@ public class Transfer {
         this.userTo = userTo;
     }
 
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

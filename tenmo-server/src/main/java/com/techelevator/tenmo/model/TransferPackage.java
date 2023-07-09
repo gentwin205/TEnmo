@@ -6,13 +6,17 @@ public class TransferPackage {
 
     private int senderId;
     private int recipientId;
-    private double amount;
+    private BigDecimal amount;
 
-    public TransferPackage(int senderId, int recipientId, double amount) {
+    public TransferPackage(int senderId, int recipientId, BigDecimal amount) {
         //BigDecimal might cause problems in http body
         this.senderId = senderId;
         this.recipientId = recipientId;
         this.amount = amount;
+    }
+
+    public TransferPackage() {
+        //nothing
     }
 
     public int getSenderId() {
@@ -23,7 +27,7 @@ public class TransferPackage {
         return recipientId;
     }
 
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 }

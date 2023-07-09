@@ -41,7 +41,7 @@ public class TransferService {
         return user;
     }
 
-    public TransferPackage transferBucks(int senderId, int recipientId, double amountGiven) {
+    public TransferPackage transferBucks(int senderId, int recipientId, BigDecimal amountGiven) {
         TransferPackage tp = new TransferPackage(senderId, recipientId, amountGiven);
         HttpEntity<TransferPackage> entity = makeAuthEntity(tp);
         TransferPackage returnedPackage = null;
