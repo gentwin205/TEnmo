@@ -102,8 +102,20 @@ public class App {
 	}
 
 	private void viewTransferHistory() {
-		// TODO Auto-generated method stub
-		
+		//Display full list of transfers
+        TransferService transferService = new TransferService(API_BASE_URL, currentUser);
+        Transfer[] transfers = transferService.listTransfers(currentUser.getUser().getId());
+        consoleService.displayTransfers(transfers, currentUser.getUser().getUsername());
+
+        //prompt for transfer ID to see details
+        int transferId = consoleService.promptForInt("Please enter transfer ID to view details (0 to cancel): ");
+        if (transferId == 0) {
+            return;
+        }
+
+        //display details
+        Transfer t = transferService.getTransferById(transferId);
+        consoleService.displayTransferDetails(t);
 	}
 
 	private void viewPendingRequests() {

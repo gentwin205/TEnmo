@@ -24,21 +24,39 @@ public class TransferService {
          baseUrl = url;
     }
 
-    public Transfer[] listTransfer(){
+    public Transfer[] listTransfers(int id){
         Transfer[] transfer = null;
-       return null;
 
+        try {
+            transfer = restTemplate.exchange(baseUrl + "transfers/" + id, HttpMethod.GET, makeAuthEntity(), Transfer[].class).getBody();
+        } catch (RestClientResponseException e) {
+            System.out.println("Error getting transfers.");
+        }
+
+        return transfer;
     }
 
     public User[] getUsers(){
         User[] user = null;
         try{
-            user = restTemplate.exchange(baseUrl + "users", HttpMethod.GET, makeAuthEntity(), User[].class ).getBody();
+            user = restTemplate.exchange(baseUrl + "users", HttpMethod.GET, makeAuthEntity(), User[].class).getBody();
 
         }catch(RestClientResponseException e ){
             System.out.println("Error getting users");
         }
         return user;
+    }
+
+    public Transfer getTransferById(int id) {
+        Transfer t = new Transfer();
+
+        try {
+            t = restTemplate.exchange(baseUrl + "transfer/" + id, HttpMethod.GET, makeAuthEntity(), Transfer.class).getBody();
+        } catch (RestClientResponseException e) {
+            System.out.println("Error getting transfer object");
+        }
+
+        return t;
     }
 
     public TransferPackage transferBucks(int senderId, int recipientId, BigDecimal amountGiven) {
@@ -47,7 +65,7 @@ public class TransferService {
         TransferPackage returnedPackage = null;
 
         try {
-            returnedPackage = restTemplate.postForObject(baseUrl + "transfer", entity, TransferPackage.class);
+            returnedPackage = restTemplate.postForObject(baseUrl + "transfers", entity, TransferPackage.class);
 
         } catch (RestClientResponseException e) {
             System.out.println(e.getMessage());
@@ -65,7 +83,6 @@ public class TransferService {
         return a;
     }
 
-    //Not pretty but might work?
     private HttpEntity<TransferPackage> makeAuthEntity(TransferPackage tp) {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(currentUser.getToken());

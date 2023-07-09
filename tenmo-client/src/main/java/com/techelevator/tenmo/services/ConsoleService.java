@@ -1,10 +1,12 @@
 package com.techelevator.tenmo.services;
 
 
+import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.model.User;
 import com.techelevator.tenmo.model.UserCredentials;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleService {
@@ -99,5 +101,35 @@ public class ConsoleService {
             System.out.printf("%s    %s\n", id, name);
         }
         System.out.println("-------------------------------------------");
+    }
+
+    public void displayTransfers(Transfer[] transfers, String username) {
+        System.out.println("------------------------------------------------------");
+        System.out.println("Transfers");
+        System.out.printf("%-20s%-20s%-20s\n", "ID", "From/To", "Amount");
+        System.out.println("------------------------------------------------------");
+
+        for(Transfer t : transfers) {
+            System.out.printf("%-20s%s%-20s$%-20f\n",
+                    t.getTransferId(),
+                    (t.getUserFrom().equals(username) ? "To: " : "From: "),
+                    (t.getUserFrom().equals(username) ? t.getUserTo() : t.getUserFrom()),
+                    t.getAmount().doubleValue());
+        }
+
+        System.out.println("------------------------------------------------------");
+    }
+
+    public void displayTransferDetails(Transfer t) {
+        System.out.println("------------------------------------------------------");
+        System.out.println("Transfer Details");
+        System.out.println("------------------------------------------------------");
+        System.out.printf("Id: %d\n", t.getTransferId());
+        System.out.printf("From: %s\n", t.getUserFrom());
+        System.out.printf("To: %s\n", t.getUserTo());
+        System.out.printf("Type: %s\n", t.getTransferTypeDesc());
+        System.out.printf("Status: %s\n", t.getTransferStatusDesc());
+        System.out.printf("Amount: $%f\n", t.getAmount().doubleValue());
+
     }
 }

@@ -26,10 +26,15 @@ public class TransferController {
         this.accountDao = accountDao;
     }
 
-    @RequestMapping(path = "transfer/{id}", method = RequestMethod.GET)
-    public List<Transfer> getAllTransfers(@PathVariable int id){
+    @RequestMapping(path = "transfers/{id}", method = RequestMethod.GET)
+    public List<Transfer> getTransfersByUserId(@PathVariable int id){
         List<Transfer> transfer = transferDao.getAllTransfers(id);
         return transfer;
+    }
+
+    @RequestMapping(path = "transfer/{id}", method = RequestMethod.GET)
+    public Transfer getTransferById(@PathVariable int id) {
+        return transferDao.getTransferById(id);
     }
 
     @RequestMapping(path = "users", method = RequestMethod.GET)

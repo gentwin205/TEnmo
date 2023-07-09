@@ -21,19 +21,61 @@ public class JdbcTransfer implements TransferDao {
     @Override
     public List<Transfer> getAllTransfers(int userId) {
         List<Transfer> list = new ArrayList<>();
-        String sql = "SELECT t.*, u1.username AS userFrom, u2.username AS userTo" +
-                "FROM transfer t" +
-                "JOIN account a ON account_from = a.account_id" +
-                "JOIN account b ON account_to = b.account_id" +
-                "JOIN tenmo_user u1 ON a.user_id = u1.user_id" +
-                "JOIN tenmo_user u2 ON b.user_id = u2.user_id" +
+//        String sql = "SELECT t.*, u1.username AS user_from, u2.username AS user_to " +
+//                "FROM transfer t " +
+//                "JOIN account a ON account_from = a.account_id " +
+//                "JOIN account b ON account_to = b.account_id " +
+//                "JOIN tenmo_user u1 ON a.user_id = u1.user_id " +
+//                "JOIN tenmo_user u2 ON b.user_id = u2.user_id " +
+//                "WHERE a.user_id = ? OR b.user_id = ?;";
+
+        String sql = "SELECT t.*, u1.username AS user_from, u2.username AS user_to, transfer_type_desc, transfer_status_desc " +
+                "FROM transfer t " +
+                "JOIN account a ON account_from = a.account_id " +
+                "JOIN account b ON account_to = b.account_id " +
+                "JOIN tenmo_user u1 ON a.user_id = u1.user_id " +
+                "JOIN tenmo_user u2 ON b.user_id = u2.user_id " +
+                "JOIN transfer_status USING (transfer_status_id) " +
+                "JOIN transfer_type USING (transfer_type_id) " +
                 "WHERE a.user_id = ? OR b.user_id = ?;";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, userId);
-        while(results.next()){
-            Transfer transfer = mapRowToTransfer(results);
-            list.add(transfer);
+
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId, userId);
+            while(results.next()){
+                Transfer transfer = mapRowToTransfer(results);
+                list.add(transfer);
+            }
+        } catch(Exception e) {
+            System.out.println("problem in jdbcTransfer");
         }
+
+
         return list;
+    }
+
+    @Override
+    public Transfer getTransferById(int transferId) {
+        Transfer t = null;
+        String sql = "SELECT t.*, u1.username AS user_from, u2.username AS user_to, transfer_type_desc, transfer_status_desc " +
+                "FROM transfer t " +
+                "JOIN account a ON account_from = a.account_id " +
+                "JOIN account b ON account_to = b.account_id " +
+                "JOIN tenmo_user u1 ON a.user_id = u1.user_id " +
+                "JOIN tenmo_user u2 ON b.user_id = u2.user_id " +
+                "JOIN transfer_status USING (transfer_status_id) " +
+                "JOIN transfer_type USING (transfer_type_id) " +
+                "WHERE transfer_id =?;";
+
+        try {
+            SqlRowSet result = jdbcTemplate.queryForRowSet(sql, transferId);
+            if (result.next()) {
+                t = mapRowToTransfer(result);
+            }
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
+
+        return t;
     }
 
     @Override
