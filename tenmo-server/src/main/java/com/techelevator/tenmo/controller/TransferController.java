@@ -43,7 +43,7 @@ public class TransferController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(path = "transfer", method = RequestMethod.POST)
+    @RequestMapping(path = "transfers", method = RequestMethod.POST)
     public Transfer transferBucks(@RequestBody TransferPackage tp) {
         int fromId = accountDao.getAccountByUserId(tp.getSenderId());
         int toId = accountDao.getAccountByUserId(tp.getRecipientId());
